@@ -1,5 +1,5 @@
 /**
- * Lucia Auth layer setup for scripts.
+ * Database setup for scripts.
  * @script_deps
  */
 
