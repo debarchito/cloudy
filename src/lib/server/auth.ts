@@ -14,7 +14,7 @@ const adapter = new DrizzleSQLiteAdapter(db, sessions, users);
 export const auth = new Lucia(adapter, {
   sessionExpiresIn: new TimeSpan(7, "d"),
   sessionCookie: {
-    name: "=session",
+    name: "session",
     expires: true,
     attributes: {
       secure: true,
