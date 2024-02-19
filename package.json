@@ -15,7 +15,8 @@
     "test:unit": "vitest",
     "shadcn:add": "pnpm dlx shadcn-svelte@latest add",
     "db:generate": "pnpm drizzle-kit generate:sqlite --config=drizzle.config.ts",
-    "db:push": "pnpm drizzle-kit push:sqlite --config=drizzle.config.ts"
+    "db:push": "pnpm drizzle-kit push:sqlite --config=drizzle.config.ts",
+    "db:createUser": "cd scripts && node --no-warnings createUser.js"
   },
   "dependencies": {
     "@libsql/client": "^0.5.0",
@@ -23,6 +24,7 @@
     "oslo": "^1.1.2"
   },
   "devDependencies": {
+    "@inquirer/prompts": "^4.0.0",
     "@lucia-auth/adapter-drizzle": "^1.0.2",
     "@playwright/test": "^1.41.2",
     "@sveltejs/adapter-node": "^4.0.1",
