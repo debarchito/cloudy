@@ -19,12 +19,10 @@
   <title>Login - Cloudy</title>
 </svelte:head>
 
-<Card class="mt-[25vh] mx-auto max-w-sm">
+<Card class="mx-auto mt-[25vh] max-w-sm">
   <CardHeader class="space-y-1">
     <CardTitle class="text-2xl font-bold">Login</CardTitle>
-    <CardDescription>
-      Enter your username and password to login.
-    </CardDescription>
+    <CardDescription>Enter your username and password to login.</CardDescription>
   </CardHeader>
 
   <CardContent>
@@ -36,7 +34,12 @@
 
       <div class="space-y-2">
         <Label for="password">Password</Label>
-        <Input id="password" placeholder={checked ? "password" : "*&%#@!-;"} required type={checked ? "text" : "password"} />
+        <Input
+          id="password"
+          placeholder={checked ? "password" : "*&%#@!-;"}
+          required
+          type={checked ? "text" : "password"}
+        />
       </div>
 
       <div class="space-y-2">
