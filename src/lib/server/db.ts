@@ -1,3 +1,4 @@
+import * as schema from "./schema";
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import { DATABASE_URL, DATABASE_AUTH_TOKEN, DATABASE_LOCATION } from "$env/static/private";
@@ -13,4 +14,4 @@ export const client = createClient({
 /**
  * The database instance.
  */
-export const db = drizzle(client);
+export const db = drizzle(client, { schema });
