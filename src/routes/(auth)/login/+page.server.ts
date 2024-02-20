@@ -24,7 +24,7 @@ export const actions = {
   default: async ({ request, cookies }) => {
     const form = await superValidate(request, zod(formSchema));
 
-    if(!form.valid) {
+    if (!form.valid) {
       form.errors.username = ["Invalid form submission."];
       return fail(400, { form });
     }
