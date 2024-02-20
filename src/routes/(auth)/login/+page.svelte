@@ -36,9 +36,11 @@
         <Label for="username">Username</Label>
 
         <Input
+          name="username"
           id="username"
           placeholder="dr_ratio"
           type="text"
+          aria-invalid={$errors.username ? 'true' : undefined}
           bind:value={$form.username}
           {...$constraints.username}
         />
@@ -48,9 +50,11 @@
         <Label for="password">Password</Label>
 
         <Input
+          name="password"
           id="password"
           placeholder={checked ? "password" : "*&%#@!-;"}
           type={checked ? "text" : "password"}
+          aria-invalid={$errors.username ? 'true' : undefined}
           bind:value={$form.password}
           {...$constraints.password}
         />
