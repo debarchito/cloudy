@@ -5,7 +5,7 @@
   import { Input } from "$lib/components/ui/input";
   import * as Alert from "$lib/components/ui/alert";
   import { Button } from "$lib/components/ui/button";
-  // import { Checkbox } from "$lib/components/ui/checkbox";
+  import { Checkbox } from "$lib/components/ui/checkbox";
   import {
     CardTitle,
     CardDescription,
@@ -41,6 +41,7 @@
           placeholder="dr_ratio"
           type="text"
           aria-invalid={$errors.username ? 'true' : undefined}
+          spellcheck="false"
           bind:value={$form.username}
           {...$constraints.username}
         />
@@ -55,13 +56,14 @@
           placeholder={checked ? "password" : "*&%#@!-;"}
           type={checked ? "text" : "password"}
           aria-invalid={$errors.username ? 'true' : undefined}
+          spellcheck="false"
           bind:value={$form.password}
           {...$constraints.password}
         />
       </div>
 
       <div class="space-y-2">
-        <!-- <Checkbox id="terms" bind:checked aria-labelledby="terms-label" />
+        <Checkbox id="terms" bind:checked aria-labelledby="terms-label" />
 
         <Label
           id="terms-label"
@@ -69,7 +71,7 @@
           class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           Show password
-        </Label> -->
+        </Label>
 
         {#if $errors.username}
           <Alert.Root variant="destructive">
