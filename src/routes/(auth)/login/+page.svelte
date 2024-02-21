@@ -40,7 +40,7 @@
           id="username"
           placeholder="dr_ratio"
           type="text"
-          aria-invalid={$errors.username ? 'true' : undefined}
+          aria-invalid={$errors.username ? "true" : undefined}
           spellcheck="false"
           bind:value={$form.username}
           {...$constraints.username}
@@ -55,7 +55,7 @@
           id="password"
           placeholder={checked ? "password" : "*&%#@!-;"}
           type={checked ? "text" : "password"}
-          aria-invalid={$errors.username ? 'true' : undefined}
+          aria-invalid={$errors.username ? "true" : undefined}
           spellcheck="false"
           bind:value={$form.password}
           {...$constraints.password}
