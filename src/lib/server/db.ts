@@ -1,17 +1,22 @@
+import pg from "pg";
 import * as schema from "./schema";
-import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
-import { DATABASE_URL, DATABASE_AUTH_TOKEN, DATABASE_LOCATION } from "$env/static/private";
+import { migrate } from "drizzle-orm/node-postgres/migrator";
+import { DATABASE_URL } from "$env/static/private";
+import { drizzle } from "drizzle-orm/node-postgres";
 
 /**
- * A libSQL client.
+ * A Postgres connection pool.
  */
-export const client = createClient({
-  url: DATABASE_URL,
-  authToken: DATABASE_LOCATION === "remote" ? DATABASE_AUTH_TOKEN : undefined,
+export const pool = new pg.Pool({
+  connectionString: DATABASE_URL,
 });
 
 /**
  * The database instance.
  */
-export const db = drizzle(client, { schema });
+export const db = drizzle(pool, { schema });
+
+// Run migrations
+migrate(db, {
+  migrationsFolder: "./drizzle",
+});

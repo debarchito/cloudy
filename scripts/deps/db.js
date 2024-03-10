@@ -3,8 +3,10 @@
  * @script_deps
  */
 
+// @ts-check
+
 import { config } from "dotenv";
-import { createClient } from "@libsql/client";
+import pg from "pg";
 
 // Only use the .env file in the root directory.
 config({
@@ -12,10 +14,8 @@ config({
 });
 
 /**
- * A libSQL client.
+ * A Postgres client.
  */
-export const client = createClient({
-  url: process.env.DATABASE_URL,
-  authToken:
-    process.env.DATABASE_LOCATION === "remote" ? process.env.DATABASE_AUTH_TOKEN : undefined,
+export const client = new pg.Client({
+  connectionString: process.env.DATABASE_URL,
 });

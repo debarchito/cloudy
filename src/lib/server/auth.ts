@@ -1,12 +1,13 @@
 import { db } from "./db";
 import { Lucia, TimeSpan } from "lucia";
 import { users, sessions } from "./schema";
-import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
+import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 
 /**
  * Drizzle adapter for Lucia.
  */
-const adapter = new DrizzleSQLiteAdapter(db, sessions, users);
+// @ts-ignore Will work.
+const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
 
 /**
  * An authentication middleware.

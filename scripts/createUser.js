@@ -5,6 +5,8 @@
  * @script
  */
 
+// @ts-check
+
 import { generateId } from "lucia";
 import { client } from "./deps/db.js";
 import { Argon2id } from "oslo/password";
@@ -23,12 +25,15 @@ try {
   const userId = generateId(16);
   const hashedPassword = await new Argon2id().hash(pswd);
 
+  await client.connect();
   await client
-    .execute({
-      sql: `INSERT INTO users (id, name, password) VALUES (?, ?, ?)`,
-      args: [userId, name, hashedPassword],
-    })
+    .query(`INSERT INTO users (id, name, password) VALUES ($1, $2, $3)`, [
+      userId,
+      name,
+      hashedPassword,
+    ])
     .then(() => console.log("[+] User created successfully!"));
+  await client.end().then(() => console.log("[+] Database connection closed."));
 } catch (err) {
   console.log("[!] An error occurred! Additional info: \n");
   console.error(err);

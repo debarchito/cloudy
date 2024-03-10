@@ -1,32 +1,30 @@
 {
-  "version": "5",
-  "dialect": "sqlite",
-  "id": "abb6788a-f6ee-47fe-94d4-cc63a1a93fba",
+  "id": "0ed0cbf3-0218-473a-b128-128c624cf7b6",
   "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "5",
+  "dialect": "pg",
   "tables": {
     "sessions": {
       "name": "sessions",
+      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "text(16)",
+          "type": "varchar(128)",
           "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "user_id": {
           "name": "user_id",
-          "type": "text",
+          "type": "varchar(16)",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "expires_at": {
           "name": "expires_at",
-          "type": "integer",
+          "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         }
       },
       "indexes": {},
@@ -46,27 +44,32 @@
     },
     "users": {
       "name": "users",
+      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "text(16)",
+          "type": "varchar(16)",
           "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "name": {
           "name": "name",
-          "type": "text(128)",
+          "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "password": {
           "name": "password",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
@@ -76,9 +79,10 @@
     }
   },
   "enums": {},
+  "schemas": {},
   "_meta": {
+    "columns": {},
     "schemas": {},
-    "tables": {},
-    "columns": {}
+    "tables": {}
   }
 }

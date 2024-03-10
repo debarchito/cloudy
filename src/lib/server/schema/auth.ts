@@ -1,13 +1,14 @@
-import { relations } from "drizzle-orm";
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sql, relations } from "drizzle-orm";
+import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
 
 /**
  * Represents the users table in the database.
  */
-export const users = sqliteTable("users", {
-  id: text("id", { length: 16 }).notNull().primaryKey(),
-  name: text("name", { length: 128 }).notNull(),
+export const users = pgTable("users", {
+  id: varchar("id", { length: 16 }).notNull().primaryKey(),
+  name: varchar("name", { length: 128 }).notNull(),
   password: text("password").notNull(),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 /**
@@ -20,12 +21,12 @@ export const usersRelations = relations(users, ({ many }) => ({
 /**
  * Represents the sessions table in the database.
  */
-export const sessions = sqliteTable("sessions", {
-  id: text("id", { length: 16 }).notNull().primaryKey(),
-  userId: text("user_id")
+export const sessions = pgTable("sessions", {
+  id: varchar("id", { length: 128 }).notNull().primaryKey(),
+  userId: varchar("user_id", { length: 16 })
     .notNull()
     .references(() => users.id),
-  expiresAt: integer("expires_at").notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
 });
 
 /**

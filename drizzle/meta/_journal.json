@@ -1,12 +1,12 @@
 {
   "version": "5",
-  "dialect": "sqlite",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1708342554308,
-      "tag": "0000_steady_dark_beast",
+      "when": 1710055670275,
+      "tag": "0000_perfect_bloodscream",
       "breakpoints": true
     }
   ]
