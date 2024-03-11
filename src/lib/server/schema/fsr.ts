@@ -27,7 +27,7 @@ export const filesRelations = relations(files, ({ one }) => ({
     fields: [files.userId],
     references: [users.id],
   }),
-  dir: one(dirs, {
+  parentDir: one(dirs, {
     fields: [files.parentDirId],
     references: [dirs.id],
   }),
@@ -52,13 +52,15 @@ export const dirs = pgTable("dirs", {
 /**
  * Defines the relations for the dirs table.
  */
-export const dirsRelations = relations(dirs, ({ one }) => ({
+export const dirsRelations = relations(dirs, ({ one, many }) => ({
   user: one(users, {
     fields: [dirs.userId],
     references: [users.id],
   }),
-  dir: one(dirs, {
+  parentDir: one(dirs, {
     fields: [dirs.parentDirId],
     references: [dirs.id],
   }),
+  files: many(files),
+  subDirs: many(dirs),
 }));
