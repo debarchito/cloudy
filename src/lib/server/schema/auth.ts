@@ -1,3 +1,4 @@
+import { files, dirs } from "./fsr";
 import { sql, relations } from "drizzle-orm";
 import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
 
@@ -16,6 +17,8 @@ export const users = pgTable("users", {
  */
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
+  files: many(files),
+  dirs: many(dirs),
 }));
 
 /**
