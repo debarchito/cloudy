@@ -1,4 +1,4 @@
-import { files, dirs } from "./fsr";
+import { files, dirs } from "./fsr.schema";
 import { sql, relations } from "drizzle-orm";
 import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
 

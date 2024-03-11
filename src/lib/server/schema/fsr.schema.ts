@@ -1,4 +1,4 @@
-import { users } from "./auth";
+import { users } from "./auth.schema";
 import { relations } from "drizzle-orm";
 import { pgTable, varchar, text, jsonb, type AnyPgColumn } from "drizzle-orm/pg-core";
 
