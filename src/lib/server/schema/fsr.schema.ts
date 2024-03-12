@@ -1,6 +1,8 @@
 import { users } from "./auth.schema";
-import { relations } from "drizzle-orm";
-import { pgTable, varchar, text, jsonb, type AnyPgColumn } from "drizzle-orm/pg-core";
+import { sql, relations } from "drizzle-orm";
+import { pgTable, varchar, text, jsonb, timestamp, type AnyPgColumn } from "drizzle-orm/pg-core";
+
+// TODO: Add size
 
 /**
  * Represents the files table in the database.
@@ -17,6 +19,7 @@ export const files = pgTable("files", {
     .notNull()
     .default("root")
     .references(() => dirs.id),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 /**
@@ -47,6 +50,7 @@ export const dirs = pgTable("dirs", {
     .notNull()
     .default("root")
     .references((): AnyPgColumn => dirs.id),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 /**
