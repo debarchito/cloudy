@@ -4,14 +4,14 @@ import { lsBuilder } from "./fsr/ls";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 /**
- * Represents the parameters for a file in the system.
+ * @description Represents the parameters for a file in the system.
  */
 type FileParameters = Omit<typeof schema.files.$inferInsert, "id" | "createdAt" | "properties"> & {
   properties: Record<string, string>;
 };
 
 /**
- * Represents the parameters for a directory in the file system.
+ * @description Represents the parameters for a directory in the file system.
  */
 type DirParameters = Omit<typeof schema.dirs.$inferInsert, "id" | "createdAt" | "properties"> & {
   properties: Record<string, string>;
@@ -22,7 +22,7 @@ type DirParameters = Omit<typeof schema.dirs.$inferInsert, "id" | "createdAt" | 
  * @param db - The database instance.
  * @returns Shell-like methods to operate on the fsr.
  */
-export async function fsr(db: NodePgDatabase<typeof schema>) {
+export function fsr(db: NodePgDatabase<typeof schema>) {
   return {
     /**
      * @description Creates a file.
