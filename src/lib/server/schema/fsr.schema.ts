@@ -13,7 +13,7 @@ export const files = pgTable("files", {
     .notNull()
     .references(() => users.id),
   name: varchar("name", { length: 128 }).notNull(),
-  chunkURLArray: text("chunk_url_array").array().notNull(),
+  chunkURLs: text("chunk_urls").array().notNull(),
   properties: jsonb("properties").notNull(),
   parentDirId: varchar("parent_dir_id", { length: 128 })
     .notNull()

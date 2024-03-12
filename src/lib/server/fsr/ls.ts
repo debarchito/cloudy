@@ -45,7 +45,7 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             'id', file_id,
             'name', file_name,
             'properties', file_properties,
-            'chunk_url_array', file_chunk_url_array,
+            'chunk_urls', file_chunk_urls,
             'created_at', file_created_at
           ))
           FILTER (WHERE file_name IS NOT NULL)
@@ -59,7 +59,7 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             null AS file_id,
             null AS file_name,
             null AS file_properties,
-            null AS file_chunk_url_array,
+            null AS file_chunk_urls,
             null AS file_created_at
           FROM
             dirs d
@@ -76,7 +76,7 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             f.id AS file_id,
             f.name AS file_name,
             f.properties AS file_properties,
-            f.chunk_url_array AS file_chunk_url_array,
+            f.chunk_urls AS file_chunk_urls,
             f.created_at AS file_created_at
           FROM
             files f

@@ -1,0 +1,1 @@
+ALTER TABLE "files" RENAME COLUMN "chunk_url_array" TO "chunk_urls";
