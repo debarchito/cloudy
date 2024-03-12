@@ -10,5 +10,4 @@ test-results/
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-db.libsql
-data.sqld/
+Cloudy TestDB.session.sql
