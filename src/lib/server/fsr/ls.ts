@@ -28,7 +28,7 @@ type LsReturn = {
  */
 export function lsBuilder(db: NodePgDatabase<typeof schema>) {
   return async function (userId: string, parentDirId = "root") {
-    return await db.execute<LsReturn>(
+    return db.execute<LsReturn>(
       await sql`
       SELECT
         jsonb_build_object(

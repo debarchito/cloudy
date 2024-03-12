@@ -33,7 +33,7 @@ export async function fsr(db: NodePgDatabase<typeof schema>) {
       const id = nanoid(128);
       return db
         .insert(schema.files)
-        .values({ ...params, id })
+        .values({ ...params, parentDirId: params.parentDirId || "root", id })
         .returning();
     },
 
@@ -46,7 +46,7 @@ export async function fsr(db: NodePgDatabase<typeof schema>) {
       const id = nanoid(128);
       return db
         .insert(schema.dirs)
-        .values({ ...params, id })
+        .values({ ...params, parentDirId: params.parentDirId || "root", id })
         .returning();
     },
 
