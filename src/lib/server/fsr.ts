@@ -19,7 +19,7 @@ type DirParameters = Omit<typeof schema.dirs.$inferInsert, "id" | "createdAt" | 
 
 /**
  * @description File System Representation (fsr)
- * @param db The database instance.
+ * @param db - The database instance.
  * @returns Shell-like methods to operate on the fsr.
  */
 export async function fsr(db: NodePgDatabase<typeof schema>) {
