@@ -32,19 +32,23 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
       await sql`
       SELECT
         jsonb_build_object(
-          'dirs', jsonb_agg(jsonb_build_object(
+          'dirs',
+          jsonb_agg(jsonb_build_object(
             'id', directory_id,
             'name', directory_name,
             'properties', directory_properties,
             'created_at', directory_created_at
-          )) FILTER (WHERE directory_name IS NOT NULL),
-            'files', jsonb_agg(jsonb_build_object(
-                'id', file_id,
-                'name', file_name,
-                'properties', file_properties,
-                'chunk_url_array', file_chunk_url_array,
-                'created_at', file_created_at
-            )) FILTER (WHERE file_name IS NOT NULL)
+          ))
+          FILTER (WHERE directory_name IS NOT NULL),
+          'files',
+          jsonb_agg(jsonb_build_object(
+            'id', file_id,
+            'name', file_name,
+            'properties', file_properties,
+            'chunk_url_array', file_chunk_url_array,
+            'created_at', file_created_at
+          ))
+          FILTER (WHERE file_name IS NOT NULL)
         ) AS result
         FROM (
           SELECT
