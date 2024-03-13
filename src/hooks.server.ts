@@ -1,4 +1,11 @@
+import { db } from "$lib/server/db";
+import { fsr } from "$lib/server/fsr";
 import { auth } from "$lib/server/auth";
+
+/**
+ * @description FSR instance.
+ */
+const fsrInstance = fsr(db);
 
 export const handle = async ({ event, resolve }) => {
   const sessionId = event.cookies.get(auth.sessionCookieName);
@@ -6,6 +13,7 @@ export const handle = async ({ event, resolve }) => {
   if (!sessionId) {
     event.locals.user = null;
     event.locals.session = null;
+    event.locals.fsr = null;
     return resolve(event);
   }
 
@@ -29,5 +37,6 @@ export const handle = async ({ event, resolve }) => {
 
   event.locals.user = user;
   event.locals.session = session;
+  event.locals.fsr = fsrInstance;
   return resolve(event);
 };

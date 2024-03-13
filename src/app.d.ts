@@ -6,6 +6,7 @@ declare global {
       auth: import("$lib/server/auth").Auth;
       user: import("lucia").User | null;
       session: import("lucia").Session | null;
+      fsr: import("$lib/server/fsr").FSR | null;
     }
   }
 }

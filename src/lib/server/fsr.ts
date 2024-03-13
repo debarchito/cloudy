@@ -88,3 +88,8 @@ export function fsr(db: NodePgDatabase<typeof schema>) {
     },
   };
 }
+
+/**
+ * Type signature of fsr.
+ */
+export type FSR = ReturnType<typeof fsr>;
