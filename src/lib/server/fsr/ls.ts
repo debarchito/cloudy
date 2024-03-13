@@ -6,13 +6,14 @@ import type { NodePgDatabase } from "drizzle-orm/node-postgres";
  * @description Represents the return type of the `ls` function.
  */
 type LsReturn = {
-  dirs: {
+  size?: number;
+  dirs?: {
     id: string;
     name: string;
     properties: Record<string, string>;
     created_at: string;
   }[];
-  files: {
+  files?: {
     id: string;
     name: string;
     chunk_url_array: string[];
@@ -37,7 +38,8 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             'id', directory_id,
             'name', directory_name,
             'properties', directory_properties,
-            'created_at', directory_created_at
+            'created_at', directory_created_at,
+            'size', directory_size
           ))
           FILTER (WHERE directory_name IS NOT NULL),
           'files',
@@ -46,9 +48,16 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             'name', file_name,
             'properties', file_properties,
             'chunk_urls', file_chunk_urls,
-            'created_at', file_created_at
+            'created_at', file_created_at,
+            'size', file_size
           ))
           FILTER (WHERE file_name IS NOT NULL)
+          'size',
+          (
+            SELECT size
+            FROM dirs
+            WHERE id = ${parentDirId}
+          )
         ) AS result
         FROM (
           SELECT
@@ -56,11 +65,13 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             d.name AS directory_name,
             d.properties AS directory_properties,
             d.created_at AS directory_created_at,
+            d.size AS directory_size,
             null AS file_id,
             null AS file_name,
             null AS file_properties,
             null AS file_chunk_urls,
-            null AS file_created_at
+            null AS file_created_at,
+            null AS file_size
           FROM
             dirs d
           WHERE
@@ -73,11 +84,13 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             null AS directory_name,
             null AS directory_properties,
             null AS directory_created_at,
+            null AS directory_size,
             f.id AS file_id,
             f.name AS file_name,
             f.properties AS file_properties,
             f.chunk_urls AS file_chunk_urls,
-            f.created_at AS file_created_at
+            f.created_at AS file_created_at,
+            f.size AS file_size
           FROM
             files f
             WHERE

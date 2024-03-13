@@ -29,6 +29,13 @@
       "when": 1710257554898,
       "tag": "0003_great_strong_guy",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1710306314873,
+      "tag": "0004_thankful_hobgoblin",
+      "breakpoints": true
     }
   ]
 }
