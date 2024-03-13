@@ -31,7 +31,7 @@ export function fsr(db: NodePgDatabase<typeof schema>) {
      */
     async initForUser(userId: string) {
       const id = `root_${userId}`;
-      return await db
+      return db
         .insert(schema.dirs)
         .values({
           id,
