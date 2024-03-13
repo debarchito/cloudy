@@ -1,6 +1,14 @@
 import { users } from "./auth.schema";
 import { sql, relations } from "drizzle-orm";
-import { type AnyPgColumn, pgTable, varchar, text, jsonb, timestamp, bigint } from "drizzle-orm/pg-core";
+import {
+  type AnyPgColumn,
+  pgTable,
+  varchar,
+  text,
+  jsonb,
+  timestamp,
+  bigint,
+} from "drizzle-orm/pg-core";
 
 /**
  * Represents the files table in the database.
@@ -15,9 +23,10 @@ export const files = pgTable("files", {
   properties: jsonb("properties").notNull(),
   parentDirId: varchar("parent_dir_id", { length: 128 })
     .notNull()
-    .default("root")
     .references(() => dirs.id),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   size: bigint("size", { mode: "number" }).default(0).notNull(),
 });
 
@@ -47,9 +56,10 @@ export const dirs = pgTable("dirs", {
   properties: jsonb("properties").notNull(),
   parentDirId: varchar("parent_dir_id", { length: 128 })
     .notNull()
-    .default("root")
     .references((): AnyPgColumn => dirs.id),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   size: bigint("size", { mode: "number" }).default(0).notNull(),
 });
 
