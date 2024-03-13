@@ -29,6 +29,7 @@ type LsReturn = {
  */
 export function lsBuilder(db: NodePgDatabase<typeof schema>) {
   return async function (userId: string, parentDirId = "root") {
+    parentDirId = parentDirId === "root" ? `root_${userId}` : parentDirId;
     return db.execute<LsReturn>(
       await sql`
       SELECT
