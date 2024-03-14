@@ -1,38 +1,25 @@
-# create-svelte
+# cloudy (WIP!)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A cloud storage solution for personal use. `cloudy` implements a simple *virtual file system* (VFS) where the actual files are stored in a *resource bucket* while the indexes are stored in a `Postgres` database for efficient **CRUDS** (`S` for search & in this case filter) operations. This project was influenced by *forscht's* work on [ddrive](https://github.com/forscht/ddrive).
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+### 1. Build
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+git clone https://github.com/debarchito/cloudy.git
+cd cloudy
+pnpm install && pnpm build
 ```
 
-## Developing
+*Dockerfile* coming soon!
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### 2.1 What exactly is a "resource bucket"?
 
-```bash
-npm run dev
+In short term, *anything* that can store content in some form. This includes traditional buckets like `S3` or non-traditional ones like `Telegram`. Well, to maintain the scope of the project under a radar, `v1` of `cloudy` will only make use of `Telegram` as a *resource bucket*. I might follow-up with *a generic resource bucket* in future versions of `cloudy`.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### 2.2 Its an application, not a library!
 
-## Building
+`cloudy` is being designed from *day 1* as an application, not a library. I have plans to ship `cloudy` as a *single-executable* sometime in the future.
 
-To create a production version of your app:
+### License
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+MIT
