@@ -40,6 +40,7 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             'name', directory_name,
             'properties', directory_properties,
             'created_at', directory_created_at,
+            modified_at', directory_modified_at,
             'size', directory_size
           ))
           FILTER (WHERE directory_name IS NOT NULL),
@@ -50,6 +51,7 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             'properties', file_properties,
             'chunk_urls', file_chunk_urls,
             'created_at', file_created_at,
+            'modified_at', file_modified_at,
             'size', file_size
           ))
           FILTER (WHERE file_name IS NOT NULL)
@@ -66,12 +68,14 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             d.name AS directory_name,
             d.properties AS directory_properties,
             d.created_at AS directory_created_at,
+            d.modified_at AS directory_modified_at,
             d.size AS directory_size,
             null AS file_id,
             null AS file_name,
             null AS file_properties,
             null AS file_chunk_urls,
             null AS file_created_at,
+            null AS file_modified_at,
             null AS file_size
           FROM
             dirs d
@@ -85,12 +89,14 @@ export function lsBuilder(db: NodePgDatabase<typeof schema>) {
             null AS directory_name,
             null AS directory_properties,
             null AS directory_created_at,
+            null AS directory_modified_at,
             null AS directory_size,
             f.id AS file_id,
             f.name AS file_name,
             f.properties AS file_properties,
             f.chunk_urls AS file_chunk_urls,
             f.created_at AS file_created_at,
+            f.modified_at AS file_modified_at,
             f.size AS file_size
           FROM
             files f

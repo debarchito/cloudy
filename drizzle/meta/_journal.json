@@ -43,6 +43,13 @@
       "when": 1710330907843,
       "tag": "0005_known_imperial_guard",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1710413514809,
+      "tag": "0006_unique_cable",
+      "breakpoints": true
     }
   ]
 }

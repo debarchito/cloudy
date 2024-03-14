@@ -6,14 +6,20 @@ import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 /**
  * @description Represents the parameters for a file in the system.
  */
-type FileParameters = Omit<typeof schema.files.$inferInsert, "id" | "createdAt" | "properties"> & {
+type FileParameters = Omit<
+  typeof schema.files.$inferInsert,
+  "id" | "createdAt" | "modifiedAt" | "properties"
+> & {
   properties: Record<string, string>;
 };
 
 /**
  * @description Represents the parameters for a directory in the file system.
  */
-type DirParameters = Omit<typeof schema.dirs.$inferInsert, "id" | "createdAt" | "properties"> & {
+type DirParameters = Omit<
+  typeof schema.dirs.$inferInsert,
+  "id" | "createdAt" | "modifiedAt" | "properties"
+> & {
   properties: Record<string, string>;
 };
 
