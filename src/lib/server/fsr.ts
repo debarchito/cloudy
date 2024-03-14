@@ -1,5 +1,5 @@
 import * as schema from "./schema";
-import { nanoid } from "$lib/utils";
+import { generateId } from "lucia";
 import { lsBuilder } from "./fsr/shell/ls";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
@@ -31,26 +31,6 @@ type DirParameters = Omit<
 export function fsr(db: NodePgDatabase<typeof schema>) {
   return {
     /**
-     * @description Initializes the fsr for a user.
-     * @param userId - The user ID.
-     * @returns A Promise of the details of the root directory for the user.
-     */
-    async initForUser(userId: string) {
-      const id = `root_${userId}`;
-      return db
-        .insert(schema.dirs)
-        .values({
-          id,
-          userId,
-          name: id,
-          properties: {},
-          parentDirId: id,
-        })
-        .onConflictDoNothing({ target: schema.dirs.id })
-        .returning();
-    },
-
-    /**
      * @description The shell-like functions to operate on the fsr.
      */
     shell: {
@@ -60,7 +40,7 @@ export function fsr(db: NodePgDatabase<typeof schema>) {
        * @returns A Promise of the details of the created file.
        */
       async touch(params: FileParameters) {
-        const id = nanoid(128);
+        const id = generateId(128);
         const parentDirId =
           params.parentDirId === "root" ? `root_${params.userId}` : params.parentDirId;
         return db
@@ -75,7 +55,7 @@ export function fsr(db: NodePgDatabase<typeof schema>) {
        * @returns A Promise of the details of the created directory.
        */
       async mkdir(params: DirParameters) {
-        const id = nanoid(128);
+        const id = generateId(128);
         const parentDirId =
           params.parentDirId === "root" ? `root_${params.userId}` : params.parentDirId;
         return db

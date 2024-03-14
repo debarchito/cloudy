@@ -21,20 +21,33 @@ if (pswd !== confirmPswd) {
   process.exit(1);
 }
 
+await client.connect().catch(console.error);
+
 try {
   const userId = generateId(16);
+  const rootId = `root_${userId}`;
   const hashedPassword = await new Argon2id().hash(pswd);
 
-  await client.connect();
-  await client
-    .query(`INSERT INTO users (id, name, password) VALUES ($1, $2, $3)`, [
-      userId,
-      name,
-      hashedPassword,
-    ])
-    .then(() => console.log("[+] User created successfully!"));
-  await client.end().then(() => console.log("[+] Database connection closed."));
+  const createUser = {
+    text: "INSERT INTO users (id, name, password) VALUES ($1, $2, $3)",
+    values: [userId, name, hashedPassword],
+  };
+  const createRootForUser = {
+    text: "INSERT INTO dirs (id, user_id, name, properties, parent_dir_id) VALUES ($1, $2, $3, '{}'::jsonb, $4)",
+    values: [rootId, userId, rootId, rootId],
+  };
+
+  await client.query("BEGIN");
+  await client.query(createUser).then(() => console.log("[+] User created successfully!"));
+  await client.query(createRootForUser).then(() => console.log("[+] Created root dir for user!"));
+  await client.query("COMMIT");
 } catch (err) {
-  console.log("[!] An error occurred! Additional info: \n");
+  await client.query("ROLLBACK");
+  console.log("[!] An error occurred! Transaction rolled back. Additional info: \n");
   console.error(err);
 }
+
+await client
+  .end()
+  .then(() => console.log("[?] Database connection closed."))
+  .catch(console.error);
