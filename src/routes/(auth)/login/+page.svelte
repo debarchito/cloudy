@@ -1,5 +1,5 @@
 <script>
-  import { LogIn } from "lucide-svelte";
+  import { LogIn, TriangleAlert } from "lucide-svelte";
   import { superForm } from "sveltekit-superforms";
   import { Label } from "$lib/components/ui/label";
   import { Input } from "$lib/components/ui/input";
@@ -74,8 +74,11 @@
           </Label>
         </div>
 
+        <br />
+
         {#if $errors.username}
           <Alert.Root variant="destructive">
+            <TriangleAlert class="h-4 w-4" />
             <Alert.Title>{$errors.username}</Alert.Title>
           </Alert.Root>
         {/if}
