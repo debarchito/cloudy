@@ -3,9 +3,9 @@ import * as schema from "$lib/server/schema";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 /**
- * @description Represents the return type of the `ls` function.
+ * @description Represents the return type of the `list` function.
  */
-type LsReturn = {
+type ListReturn = {
   size?: number;
   dirs?: {
     id: string;
@@ -23,14 +23,14 @@ type LsReturn = {
 };
 
 /**
- * @description Builds the `ls` function that retrieves the list of directories and files within a specified parent directory for a given user.
+ * @description Builds the `list` function that retrieves the list of directories and files within a specified parent directory for a given user.
  * @param db - The database instance.
  * @returns A function that accepts the `userId` and `parentDirId` (`root` is default), and returns a Promise of the list of directories and files.
  */
-export function lsBuilder(db: NodePgDatabase<typeof schema>) {
+export function listBuilder(db: NodePgDatabase<typeof schema>) {
   return async function (userId: string, parentDirId = "root") {
     parentDirId = parentDirId === "root" ? `root_${userId}` : parentDirId;
-    return db.execute<LsReturn>(
+    return db.execute<ListReturn>(
       await sql`
       SELECT
         jsonb_build_object(

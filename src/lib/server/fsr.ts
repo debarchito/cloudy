@@ -1,6 +1,6 @@
 import * as schema from "./schema";
 import { generateId } from "lucia";
-import { lsBuilder } from "./fsr/shell/ls";
+import { listBuilder } from "./fsr/list";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 /**
@@ -26,52 +26,47 @@ type DirParameters = Omit<
 /**
  * @description File System Representation (fsr)
  * @param db - The database instance.
- * @returns Helper and shell-like functions to operate on the fsr.
+ * @returns Helper functions to operate on the fsr.
  */
 export function fsr(db: NodePgDatabase<typeof schema>) {
   return {
     /**
-     * @description The shell-like functions to operate on the fsr.
+     * @description Creates a file.
+     * @param params - The file parameters required to create a file.
+     * @returns A Promise of the details of the created file.
      */
-    shell: {
-      /**
-       * @description Creates a file.
-       * @param params - The file parameters required to create a file.
-       * @returns A Promise of the details of the created file.
-       */
-      async touch(params: FileParameters) {
-        const id = generateId(128);
-        const parentDirId =
-          params.parentDirId === "root" ? `root_${params.userId}` : params.parentDirId;
-        return db
-          .insert(schema.files)
-          .values({ ...params, id, parentDirId })
-          .returning();
-      },
-
-      /**
-       * @description Creates a directory.
-       * @param params - The directory parameters required to create a directory.
-       * @returns A Promise of the details of the created directory.
-       */
-      async mkdir(params: DirParameters) {
-        const id = generateId(128);
-        const parentDirId =
-          params.parentDirId === "root" ? `root_${params.userId}` : params.parentDirId;
-        return db
-          .insert(schema.dirs)
-          .values({ ...params, id, parentDirId })
-          .returning();
-      },
-
-      /**
-       * @description Retrieves the list of directories and files within a specified parent directory for a given user.
-       * @param userId - The user ID.
-       * @param parentDirId - The parent directory ID.
-       * @returns A Promise of the list of directories and files.
-       */
-      ls: lsBuilder(db),
+    async createFile(params: FileParameters) {
+      const id = generateId(128);
+      const parentDirId =
+        params.parentDirId === "root" ? `root_${params.userId}` : params.parentDirId;
+      return db
+        .insert(schema.files)
+        .values({ ...params, id, parentDirId })
+        .returning();
     },
+
+    /**
+     * @description Creates a directory.
+     * @param params - The directory parameters required to create a directory.
+     * @returns A Promise of the details of the created directory.
+     */
+    async createDir(params: DirParameters) {
+      const id = generateId(128);
+      const parentDirId =
+        params.parentDirId === "root" ? `root_${params.userId}` : params.parentDirId;
+      return db
+        .insert(schema.dirs)
+        .values({ ...params, id, parentDirId })
+        .returning();
+    },
+
+    /**
+     * @description Retrieves the list of directories and files within a specified parent directory for a given user.
+     * @param userId - The user ID.
+     * @param parentDirId - The parent directory ID.
+     * @returns A Promise of the list of directories and files.
+     */
+    list: listBuilder(db),
   };
 }
 
