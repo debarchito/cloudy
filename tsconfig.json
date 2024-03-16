@@ -1,5 +1,11 @@
 {
   "extends": "./.svelte-kit/tsconfig.json",
+  "lib": [
+		"esnext",
+		"DOM",
+		"DOM.Iterable",
+    "webworker"
+	],
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
