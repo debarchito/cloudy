@@ -7,7 +7,7 @@
   import { LogOut, Palette, Settings } from "lucide-svelte";
 
   export let username: string;
-  let avatarName = username[0].toUpperCase();
+  const avatarName = username[0].toUpperCase();
 </script>
 
 <DropdownMenu.Root>
