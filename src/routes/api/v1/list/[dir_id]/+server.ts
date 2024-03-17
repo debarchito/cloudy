@@ -9,11 +9,12 @@ export async function GET({ locals, params }) {
     });
   }
 
-  const dirId = params.dir_id;
-  const data = await locals.fsr!.list(locals.session!.userId!, dirId);
-  const result = data!.rows[0].result;
+  const { dir_id: dirId } = params;
+  const userId = locals.session?.userId;
+  const data = await locals.fsr?.list(userId!, dirId);
+  const result = data?.rows[0].result;
 
-  if (result!.size === null) {
+  if (result?.size === null) {
     return json({
       status: 404,
       message: "Invalid directory id",
