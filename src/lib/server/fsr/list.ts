@@ -6,20 +6,22 @@ import type { NodePgDatabase } from "drizzle-orm/node-postgres";
  * @description Represents the return type of the `list` function.
  */
 type ListReturn = {
-  size?: number;
-  dirs?: {
-    id: string;
-    name: string;
-    properties: Record<string, string>;
-    created_at: string;
-  }[];
-  files?: {
-    id: string;
-    name: string;
-    chunk_url_array: string[];
-    properties: Record<string, string>;
-    created_at: string;
-  }[];
+  result: {
+    size?: number;
+    dirs?: {
+      id: string;
+      name: string;
+      properties: Record<string, string>;
+      created_at: string;
+    }[];
+    files?: {
+      id: string;
+      name: string;
+      chunk_url_array: string[];
+      properties: Record<string, string>;
+      created_at: string;
+    }[];
+  }
 };
 
 /**
@@ -40,7 +42,7 @@ export function listBuilder(db: NodePgDatabase<typeof schema>) {
             'name', directory_name,
             'properties', directory_properties,
             'created_at', directory_created_at,
-            modified_at', directory_modified_at,
+            'modified_at', directory_modified_at,
             'size', directory_size
           ))
           FILTER (WHERE directory_name IS NOT NULL),
@@ -54,7 +56,7 @@ export function listBuilder(db: NodePgDatabase<typeof schema>) {
             'modified_at', file_modified_at,
             'size', file_size
           ))
-          FILTER (WHERE file_name IS NOT NULL)
+          FILTER (WHERE file_name IS NOT NULL),
           'size',
           (
             SELECT size
@@ -81,7 +83,7 @@ export function listBuilder(db: NodePgDatabase<typeof schema>) {
             dirs d
           WHERE
             d.parent_dir_id = ${parentDirId}
-            AND d.id != 'root'
+            AND d.id != ${parentDirId}
             AND d.user_id = ${userId}
             UNION ALL
           SELECT
