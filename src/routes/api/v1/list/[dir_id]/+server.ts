@@ -1,7 +1,7 @@
-import { json } from '@sveltejs/kit';
+import { json } from "@sveltejs/kit";
 
 export async function GET({ locals, params }) {
-  if(!locals.user) {
+  if (!locals.user) {
     return json({
       status: 401,
       message: "Unauthorized",
@@ -13,7 +13,7 @@ export async function GET({ locals, params }) {
   const data = await locals.fsr!.list(locals.session!.userId!, dirId);
   const result = data!.rows[0].result;
 
-  if(result!.size === null) {
+  if (result!.size === null) {
     return json({
       status: 404,
       message: "Invalid directory id",
@@ -26,4 +26,4 @@ export async function GET({ locals, params }) {
     message: "OK",
     result,
   });
-};
+}

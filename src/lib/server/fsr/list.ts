@@ -21,7 +21,7 @@ type ListReturn = {
       properties: Record<string, string>;
       created_at: string;
     }[];
-  }
+  };
 };
 
 /**
