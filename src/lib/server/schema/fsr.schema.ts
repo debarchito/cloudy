@@ -24,7 +24,7 @@ export const files = pgTable("files", {
   parentDirId: varchar("parent_dir_id", { length: 128 })
     .notNull()
     .references(() => dirs.id),
-  size: bigint("size", { mode: "number" }).default(0).notNull(),
+  size: bigint("size", { mode: "number" }).notNull(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -60,7 +60,7 @@ export const dirs = pgTable("dirs", {
   parentDirId: varchar("parent_dir_id", { length: 128 })
     .notNull()
     .references((): AnyPgColumn => dirs.id),
-  size: bigint("size", { mode: "number" }).default(0).notNull(),
+  size: bigint("size", { mode: "number" }).notNull(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

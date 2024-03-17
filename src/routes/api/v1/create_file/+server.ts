@@ -13,7 +13,7 @@ const formSchema = z.object({
 });
 
 export async function POST({ locals, request }) {
-  if(!locals.user) {
+  if (!locals.user) {
     return json({
       status: 401,
       message: "Unauthorized",
@@ -25,7 +25,7 @@ export async function POST({ locals, request }) {
   const data = Object.fromEntries(formData);
   const validate = formSchema.safeParse(data);
 
-  if(!validate.success) {
+  if (!validate.success) {
     return json({
       status: 400,
       message: "Invalid form data",
@@ -36,14 +36,14 @@ export async function POST({ locals, request }) {
   try {
     const result = await locals.fsr?.createFile({
       userId: locals.session!.userId!,
-      ...validate.data
+      ...validate.data,
     });
     return json({
       status: 200,
       message: "OK",
       result,
     });
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     return json({
       status: 500,
